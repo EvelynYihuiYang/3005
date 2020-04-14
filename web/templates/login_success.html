@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BookStore Login Success</title>
+    <link rel="stylesheet" href="static/bootstrap.min.css">
+</head>
+<body>
+    <!-- Nav Bar-->
+    <div id="navbar" class="collapse navbar-collapse navbar-inverse">
+    <ul class="nav navbar-nav">
+    </ul>
+    </div>
+
+    <div class="container">
+        <div class="starter-template">
+            <!-- Main content should go here-->
+            {% if name_info %}
+            <h1>{{name_info.name}} Successfully Logged In!</h1>
+            {% endif %}
+
+        </div>
+    </div>
+</body>
+</html>

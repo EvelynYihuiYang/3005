@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Place Order</title>
+    <link rel="stylesheet" href="static/bootstrap.min.css">
+    <script src="static/jquery.min.js"></script>
+    <script>
+
+        function order_add () {
+            var credit_card = $('#credit_card').val();
+            if(credit_card == null || credit_card == '') {
+                alert("Please Input CreditCard!");
+                return;
+            }
+            var phone_number = $('#phone_number').val();
+            if(phone_number == null || phone_number == '') {
+                alert("Please Input PhoneNumber!");
+                return;
+            }
+             var address= $('#address').val();
+            if(address == null || address == '') {
+                alert("Please Input Address!");
+                return;
+            }
+            $.ajax({
+                url: "/order_add",
+                type: "POST",
+                data: {
+                    "credit_card": credit_card,
+                    "phone_number": phone_number,
+                    "address": address,
+                },
+                success: function (data) {
+                    window.location.href = "/order_search";
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        }
+
+    </script>
+</head>
+<body>
+    <!-- Nav Bar-->
+    <div id="navbar" class="collapse navbar-collapse navbar-inverse">
+    <ul class="nav navbar-nav">
+        <li><a href="/book_manage">Book Manage</a></li>
+        <li><a href="/report">Report</a></li>
+        <li class="active"><a href="/place_order">Place Order</a></li>
+    </ul>
+    </div>
+
+    <div class="container">
+        <div class="starter-template">
+            <!-- Main content should go here-->
+            <h1>Place Order Email</h1>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        {% for i in label %}
+                            <td>{{ i }}</td>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in table %}
+                        <tr>
+                            {% for j in i %}
+                                <td>{{ j }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br>
+            <br>
+        </div>
+    </div>
+</body>
+</html>

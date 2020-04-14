@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BookStore Login</title>
+    <link rel="stylesheet" href="static/bootstrap.min.css">
+</head>
+<body>
+    <!-- Nav Bar-->
+    <div id="navbar" class="collapse navbar-collapse navbar-inverse">
+    <ul class="nav navbar-nav">
+    </ul>
+    </div>
+
+    <div class="container">
+        <div class="starter-template">
+            <!-- Main content should go here-->
+            <h1>Login</h1>
+
+            <form action="/login" method="POST">
+                UserName:
+                <br>
+                <input type="text" name="name">
+                <br>
+                Password:
+                <br>
+                <input type="password" name="password">
+                <br><br>
+                <input type="submit">
+                <br>
+                <br>
+                <a href="/register">Click Here To Register</a>
+                <br>
+                <br>
+                {% if error %}
+                {{error}}
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Search</title>
+    <link rel="stylesheet" href="static/bootstrap.min.css">
+    <script src="static/jquery.min.js"></script>
+    <script>
+
+        function add_basket (book_name) {
+            $.ajax({
+                url: "/add_basket",
+                type: "POST",
+                data: {
+                    "book_name": book_name,
+                },
+                success: function (data) {
+                    console.log(data);
+                    alert("Add " + book_name + " To My Basket Success!")
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        }
+
+    </script>
+</head>
+<body>
+    <!-- Nav Bar-->
+    <div id="navbar" class="collapse navbar-collapse navbar-inverse">
+    <ul class="nav navbar-nav">
+        <li class="active"><a href="/book_search">Search</a></li>
+        <li><a href="/basket_search">My Basket</a></li>
+        <li><a href="/order_search">My Order</a></li>
+    </ul>
+    </div>
+
+    <div class="container">
+        <div class="starter-template">
+            <!-- Main content should go here-->
+            <h1>Search</h1>
+            <form action="/book_search" method="POST">
+                BookName: <input type="text" name="book_name">
+                <input type="submit">
+            </form>
+            <br>
+            <br>
+            <h1>Result</h1>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        {% for i in label %}
+                            <td>{{ i }}</td>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in table %}
+                        <tr>
+                            {% for j in i %}
+                                <td>{{ j }}</td>
+                            {% endfor %}
+                            <td><a href="javascript:add_basket('{{ i[0] }}');">Add To My Basket</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

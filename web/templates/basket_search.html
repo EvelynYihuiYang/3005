@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Basket</title>
+    <link rel="stylesheet" href="static/bootstrap.min.css">
+    <script src="static/jquery.min.js"></script>
+    <script>
+
+        function basket_delete (book_name, createTime) {
+            $.ajax({
+                url: "/basket_delete",
+                type: "POST",
+                data: {
+                    "book_name": book_name,
+                    "createTime": createTime,
+                },
+                success: function (data) {
+                    console.log(data);
+                    window.location.href="/basket_search";//refresh
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        }
+        
+        function checkout() {
+            window.location.href="/checkout";
+        }
+
+    </script>
+</head>
+<body>
+    <!-- Nav Bar-->
+    <div id="navbar" class="collapse navbar-collapse navbar-inverse">
+    <ul class="nav navbar-nav">
+        <li><a href="/book_search">Search</a></li>
+        <li class="active"><a href="/basket_search">My Basket</a></li>
+        <li><a href="/order_search">My Order</a></li>
+    </ul>
+    </div>
+
+    <div class="container">
+        <div class="starter-template">
+            <!-- Main content should go here-->
+            <h1>My Basket</h1>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        {% for i in label %}
+                            <td>{{ i }}</td>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in table %}
+                        <tr>
+                            {% for j in i %}
+                                <td>{{ j }}</td>
+                            {% endfor %}
+                            <td><a href="javascript:basket_delete('{{ i[0] }}', '{{ i[1] }}');">Delete</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br>
+            <br>
+            <button type="button" onclick="checkout()">Buy</button>
+        </div>
+    </div>
+</body>
+</html>

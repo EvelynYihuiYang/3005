@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Manage</title>
+    <link rel="stylesheet" href="static/bootstrap.min.css">
+    <script src="static/jquery.min.js"></script>
+    <script>
+
+        function book_add() {
+            var book_name = $('#book_name').val();
+            if(book_name == null || book_name == '') {
+                alert("Please Input Book Name!");
+                return;
+            }
+            var isbn = $('#isbn').val();
+            if(isbn == null || isbn == '') {
+                alert("Please Input ISBN!");
+                return;
+            }
+            var publisher = $('#publisher option:selected').val();
+            if(publisher == null || publisher == '') {
+                alert("Please Choose Publisher!");
+                return;
+            }
+            var number_of_page = $('#number_of_page').val();
+            if(number_of_page == null || number_of_page == '') {
+                alert("Please Input Number Of Page!");
+                return;
+            }
+            var price = $('#price').val();
+            if(price == null || price == '') {
+                alert("Please Input Price!");
+                return;
+            }
+            obj = document.getElementsByName("author");
+            var author = [];
+            for(k in obj){
+                if(obj[k].checked)
+                    author.push(obj[k].value);
+            }
+            if(author == null || author.length == 0) {
+                alert("Please Choose Author!");
+                return;
+            }
+            obj = document.getElementsByName("genre");
+            var genre = [];
+            for(k in obj){
+                if(obj[k].checked)
+                    genre.push(obj[k].value);
+            }
+            if(genre == null || genre.length == 0) {
+                alert("Please Choose Genre!");
+                return;
+            }
+            var transfer_percentage = $('#transfer_percentage').val();
+            if(transfer_percentage == null || transfer_percentage == '') {
+                alert("Please Input Transfer Percentage!");
+                return;
+            }
+            $.ajax({
+                url: "/book_add",
+                type: "POST",
+                data: {
+                    "book_name": book_name,
+                    "isbn": isbn,
+                    "publisher": publisher,
+                    "number_of_page": number_of_page,
+                    "price": price,
+                    "author": author.toString(),
+                    "genre": genre.toString(),
+                    "price": price,
+                    "transfer_percentage": transfer_percentage,
+                },
+                success: function (data) {
+                    console.log(data);
+                    window.location.href="/book_manage";//refresh
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        }
+
+    </script>
+</head>
+<body>
+    <!-- Nav Bar-->
+    <div id="navbar" class="collapse navbar-collapse navbar-inverse">
+    <ul class="nav navbar-nav">
+        <li class="active"><a href="/book_manage">Book Manage</a></li>
+        <li><a href="/report">Report</a></li>
+        <li><a href="/place_order">Place Order</a></li>
+    </ul>
+    </div>
+
+    <div class="container">
+        <div class="starter-template">
+            <!-- Main content should go here-->
+            <h1>Book Manage</h1>
+            <form action="javascript:book_add()" method="POST">
+                BookName:
+                <br>
+                <input type="text" name="book_name" id="book_name">
+                <br>
+                ISBN:
+                <br>
+                <input type="text" name="isbn" id="isbn">
+                <br>
+                Publisher:
+                <br>
+                <select name="publisher" id="publisher">
+                    {% for i in publisher %}
+                        <option value="{{ i[0] }}">{{ i[0] }}</option>
+                    {% endfor %}
+                    {#<option value="Pearson">Pearson</option>
+                    <option value="Penguin Random House">Penguin Random House</option>#}
+                </select>
+                <br>
+                NumberOfPage:
+                <br>
+                <input type="text" name="number_of_page" id="number_of_page">
+                <br>
+                Price:
+                <br>
+                <input type="text" name="price" id="price">
+                <br>
+                Author:
+                <br>
+                {% for i in author %}
+                    <label><input type="checkbox" name="author" value="{{ i[0] }}">{{ i[0] }}</label>
+                {% endfor %}
+                {#<label><input type="checkbox" name="author" value="Agatha Christie">Agatha Christie</label>
+                <label><input type="checkbox" name="author" value="Hans Christian Andersen">Hans Christian Andersen</label>#}
+                <br>
+                Genre:
+                <br>
+                {% for i in genre %}
+                    <label><input type="checkbox" name="genre" value="{{ i[0] }}">{{ i[1] }}</label>
+                {% endfor %}
+                {#<label><input type="checkbox" name="genre" value="g1">detective novel</label>
+                <label><input type="checkbox" name="genre" value="g2">fairy tale book</label>#}
+                <br>
+                Transfer Percentage:
+                <br>
+                <input type="text" name="transfer_percentage" id="transfer_percentage">
+                <br><br>
+                <input type="submit">
+                <br>
+                <br>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

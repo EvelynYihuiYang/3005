@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Manage</title>
+    <link rel="stylesheet" href="static/bootstrap.min.css">
+    <script src="static/jquery.min.js"></script>
+    <script>
+
+        function book_delete (book_name) {
+            $.ajax({
+                url: "/book_delete",
+                type: "POST",
+                data: {
+                    "book_name": book_name,
+                },
+                success: function (data) {
+                    console.log(data);
+                    window.location.href="/book_manage";//refresh this page
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        }
+
+        function book_add() {
+            window.location.href="/book_manage_add";
+        }
+
+    </script>
+</head>
+<body>
+    <!-- Nav Bar-->
+    <div id="navbar" class="collapse navbar-collapse navbar-inverse">
+    <ul class="nav navbar-nav">
+        <li class="active"><a href="/book_manage">Book Manage</a></li>
+        <li><a href="/report">Report</a></li>
+        <li><a href="/place_order">Place Order</a></li>
+    </ul>
+    </div>
+
+    <div class="container">
+        <div class="starter-template">
+            <!-- Main content should go here-->
+            <h1>Book Manage</h1>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        {% for i in label %}
+                            <td>{{ i }}</td>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in table %}
+                        <tr>
+                            {% for j in i %}
+                                <td>{{ j }}</td>
+                            {% endfor %}
+                            <td><a href="javascript:book_delete('{{ i[0] }}');">Remove This Book</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br>
+            <br>
+            <button type="button" onclick="book_add()">Add A New Book</button>
+        </div>
+    </div>
+</body>
+</html>

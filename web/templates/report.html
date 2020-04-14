@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Basket</title>
+    <link rel="stylesheet" href="static/bootstrap.min.css">
+    <script src="static/jquery.min.js"></script>
+    <script>
+
+    </script>
+</head>
+<body>
+    <!-- Nav Bar-->
+    <div id="navbar" class="collapse navbar-collapse navbar-inverse">
+    <ul class="nav navbar-nav">
+        <li><a href="/book_manage">Book Manage</a></li>
+        <li class="active"><a href="/report">Report</a></li>
+        <li><a href="/place_order">Place Order</a></li>
+    </ul>
+    </div>
+
+    <div class="container">
+        <div class="starter-template">
+            <!-- Main content should go here-->
+            <h1>Total Sales</h1>
+            <label>{{sales_total[0][0]}}</label>
+            <br>
+            <br>
+            <h1>Sales By Author</h1>
+            <table class="table table-striped">
+                <tbody>
+                    {% for i in sales_author %}
+                        <tr>
+                            {% for j in i %}
+                                <td>{{ j }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br>
+            <br>
+            <h1>Sales By Genre</h1>
+            <table class="table table-striped">
+                <tbody>
+                    {% for i in sales_genre %}
+                        <tr>
+                            {% for j in i %}
+                                <td>{{ j }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br>
+            <br>
+            <h1>Expenditures</h1>
+                {{sales_cost[0][0]}}
+            <br>
+            <br>
+        </div>
+    </div>
+</body>
+</html>
